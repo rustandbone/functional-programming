@@ -115,7 +115,7 @@ console.log("업데이트 데이터\n", updateSubjects);
 
 function createCountUpButton(
   container,
-  { count: initialCount = 0, step = 1, max = 10 } = {}
+  { count: initialCount = 0, step = 1, max } = {}
 ) {
   let count = initialCount;
 
