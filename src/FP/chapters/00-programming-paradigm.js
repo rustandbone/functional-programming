@@ -20,7 +20,7 @@ const courses = [
   },
 ];
 
-console.log("원본 데이터\n", courses);
+// console.log("원본 데이터\n", courses);
 
 // 1. 과정 배열을 순환하여 각 과정 이름의 좌우 공백 제거
 // 2. 과정 배열을 순환하여 각 과정 이름 대문자화
@@ -71,18 +71,12 @@ function toTrim(object) {
   return o;
 }
 
-console.log(toTrim(subjects[0]));
-console.log(toTrim(subjects[1]));
-
 // 2. 객체 이름(name) 속성 대문자화 함수 선언
 function toUpperCase(object) {
   const o = { ...object };
   o.name = o.name.toUpperCase();
   return o;
 }
-
-console.log(toUpperCase(subjects[0]));
-console.log(toUpperCase(subjects[1]));
 
 //3. 배열 원소의 'name' 속성의 공백을 _로 변경하는 기능 추가
 function convertSpaceToUnderscore(object) {
@@ -105,7 +99,7 @@ const updateSubjects = subjects
   .map(toTrim)
   .map(toUpperCase)
   .map(convertSpaceToUnderscore);
-console.log("업데이트 데이터\n", updateSubjects);
+// console.log("업데이트 데이터\n", updateSubjects);
 
 // 3. 과목 이름 "좌우 공백 제거" → "대문자화" 후, 새로운 과목 배열 생성
 
@@ -134,11 +128,9 @@ function createCountUpButton(
       count += step;
     } else {
       alert(`max로 설정한 ${max}을 초과할 수 없습니다.`);
-      console.log(count);
       return;
     }
     render(count);
-    // e.target.textContent = String(count);
   };
 
   countUpButton.setAttribute("type", "button");
@@ -155,7 +147,7 @@ const demoContainer = document.querySelector("#demo");
 /* 기본 옵션: {count:1, step:2, max:10} */
 createCountUpButton(demoContainer);
 createCountUpButton(demoContainer, { count: 1 });
-createCountUpButton(demoContainer, { count: 2 });
+createCountUpButton(demoContainer, { count: 2, max: 5 });
 createCountUpButton(demoContainer, { count: 3, step: 2, max: 10 });
 
 //과제
