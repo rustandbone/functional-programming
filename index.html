@@ -15,8 +15,18 @@
     <noscript>이 애플리케이션은 JavaScript가 활성화되어야 실행됩니다.</noscript>
     <!-- 자바스크립트로 동적 마크업, 스타일링, 스크립팅 -->
     <!-- 컨테이너 요소 -->
-    <div id="demo"></div>
+    <div class="container">
+      <!-- JavaScript로 동적 마크업, 스타일링, 스크립팅 -->
+      <div id="demo"></div>
 
-    <!-- Web Component로 동적 마크업, 스타일링, 스크립팅 -->
+      <!-- Web Component로 동적 마크업, 스타일링, 스크립팅 -->
+      <counter-button count="3" step="3"></counter-button>
+    </div>
+
+    <div class="output">
+      <span class="functional">0</span>
+      <span class="object-oriented">0</span>
+      <span class="web-component">0</span>
+    </div>
   </body>
 </html>
