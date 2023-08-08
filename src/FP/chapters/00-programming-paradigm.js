@@ -1,5 +1,6 @@
 // --------------------------------------------------------------------------
 import { insertLast } from "./../../../../projectJS-3/client/lib/dom/insert";
+import { bindEvent } from "./../../../../projectJS-3/client/lib/dom/bindEvent";
 // 📌 [프로그래밍 패러다임]
 // --------------------------------------------------------------------------
 // - 명령형, 선언형 프로그래밍 비교
@@ -160,35 +161,109 @@ createCountUpButton(demoContainer, { count: 3, step: 2, max: 10 });
 
 //붕어빵틀(생성자 함수: 클래스)
 class CountUpButton {
-  #config;
+  // static field
+  static version = "0.0.1-alpha";
 
-  constructor(userOptions) {
-    this.#config = { ...CountUpButton.defaultProps, ...userOptions };
-    this.init();
-  }
-
-  init() {
-    console.log(this.#config);
-  }
-
-  //static field
+  //
   static defaultProps = {
     count: 0,
     step: 1,
+    max: 10,
   };
+
+  //private field
+  //must be declared
+  #count;
+  #props = {};
+  #button = null;
+
+  // 라이프 사이클 메서드
+  // 생성(create, constructor) 시점
+  constructor(props) {
+    console.log("생성 시점");
+    // 클래스가 생성한 인스턴스의 상태
+    this.#count = props.count ?? 0;
+    // 인스턴스가 사용할 데이터(외부에서 사용자가 전달한 데이터와 내부의 기본 데이터가 병합)
+    this.#props = { ...CountUpButton.defaultProps, ...props };
+  }
+
+  // 렌더(HTMLElement Node)
+  // return data type : HTMLButtonElement
+  render() {
+    const button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.textContent = String(this.#count);
+    this.#button = button;
+
+    this.bindEvents();
+
+    return button;
+  }
+
+  // 렌더(HTML String)
+  // return data type : string
+  renderHTML() {
+    return `
+    <button type="button">${String(this.#count)}</button>
+    `;
+  }
+
+  bindEvents() {
+    console.log(this.#button);
+    this.#button.addEventListener("click", (e) => {
+      console.log(e.target);
+    });
+  }
+
+  // 마운트(mount) 시점 - 실제 연결
+  mount(container) {
+    console.log(typeof this.render(), typeof this.renderHTML());
+    //container?.append?.(this.render());
+    container?.insertAdjacentHTML("beforeend", this.renderHTML());
+  }
+
+  // 성장(update) 시점
+  // 소멸(unmount) 시점
+  unmount() {
+    console.log("소멸 시점");
+  }
 }
 
 // globalThis.CountUpButton = CountUpButton;
 
 //새로운(new) 붕어빵(객체: 인스턴스) 생성
 const firstCountUp = new CountUpButton({
+  count: 1,
+});
+const secondCountUp = new CountUpButton({
   count: 2,
-  step: 7,
+  step: 6,
+});
+const thirdCountUp = new CountUpButton({
+  count: 3,
+  max: 100,
 });
 
+globalThis.firstCountUp = firstCountUp; //전역 변수 설정
+
+console.log(firstCountUp);
+
 const demoContainer2 = document.getElementById("demo");
-// demoContainer2?.append(firstCountUp.render());
+// firstCountUp.mount(demoContainer2);
+// secondCountUp.mount(demoContainer2);
+// thirdCountUp.mount(demoContainer2);
 
 // --------------------------------------------------------------------------
 // 웹 컴포넌트(Web Components) API
 // → 웹 컴포넌트를 사용해 구현합니다. (참고: https://mzl.la/3YjFdu9)
+
+class CountUpButtonComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.innerHTML = /* html */ `
+      <button type="button">9</button>
+    `;
+  }
+}
+
+customElements.define("count-up-button", CountUpButtonComponent);
